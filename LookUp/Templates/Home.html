@@ -1,0 +1,19 @@
+{% extends 'Base.html' %}
+
+{% block content %}
+
+<h1>Hello</h1>
+<br/>
+
+
+{{air}}<br><br>
+
+{{api}}<br/>
+
+Location: {{api.name}}, {{api.sys.country}}<br/>
+Weather: {{api.weather.0.description.title}}<br/>
+Minimum Temperature: {{api.main.temp_min}}<br/>
+Maximum Temperature: {{api.main.temp_max}}<br/>
+Humidity: {{api.main.humidity}}<br/>
+
+{%  endblock  %}
