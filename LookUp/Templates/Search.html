@@ -15,49 +15,89 @@
 <br/>
 
 
+{% if wth.message == 'city not found' %}
+    City Not Found. 
+{% endif %}
 
-<p align="center">
-    Location: {{api.0.ReportingArea}}, {{aqi.sys.country}} <br/><br/> 
+
+<p align="center"> 
+    <!-- Have to change border color here! -->
+    {% if api.data.0.aqi <= 50 %}
+    <span class="border border-4 border-success"> &nbsp;Location: {{wth.name}}, {{api.city_name}}, {{wth.sys.country}}&nbsp;</span>  
+    {% elif 50 < api.data.0.aqi <= 100 %}
+    <span class="border border-4 border-warning"> &nbsp;Location: {{wth.name}}, {{api.city_name}}, {{wth.sys.country}}&nbsp;</span>  
+    {% elif 100 < api.data.0.aqi <= 150 %}
+    <span class="border border-4 border-danger"> &nbsp;Location: {{wth.name}}, {{api.city_name}}, {{wth.sys.country}}&nbsp;</span>  
+    {% elif 150 < api.data.0.aqi <= 200 %}
+    <span class="border border-4 border-danger"> &nbsp;Location: {{wth.name}}, {{api.city_name}}, {{wth.sys.country}}&nbsp;</span>  
+    {% elif 200 < api.data.0.aqi <= 300 %}
+    <span class="border border-4 border-danger"> &nbsp;Location: {{wth.name}}, {{api.city_name}}, {{wth.sys.country}}&nbsp;</span> 
+    {% elif 300 < api.data.0.aqi <= 500 %}
+    <span class="border border-4 border-danger"> &nbsp;Location: {{wth.name}}, {{api.city_name}}, {{wth.sys.country}}&nbsp;</span>
+    {% endif %}
+    <img src="http://openweathermap.org/img/w/{{ wth.weather.0.icon }}.png" alt="Image" style="width:50px;height:50px;"> <br><br>
+
+
     <div class="jumbotron Moderatex"> 
         <div class="row justify-content-center">
             <div class="col-4">
-                <align= "center">Weather: {{aqi.weather.0.description.title}}<br></align>
-                Air Quality Index: {{api.0.AQI}}, {{api.0.ParameterName}}<br>
-                Category: {{api.0.Category.Name}}<br/>
-                Alert Level: {{api.0.Category.Number}} 
+                <align= "center">Weather: {{wth.weather.0.description.title}} <br></align>
+                Air Quality Index: {{api.data.0.aqi}}<br> <!-- , {{api.data.0.11}} -->
+                {% if api.data.0.aqi <= 50 %}
+                    Category: Good<br/>
+                {% elif 50 < api.data.0.aqi <= 100 %}
+                    Category: Moderate<br/>
+                {% elif 100 < api.data.0.aqi <= 150 %}
+                    Category: Unhealthy for Sensitive Groups<br/>
+                {% elif 150 < api.data.0.aqi <= 200 %}
+                    Category: Unhealthy<br/>
+                {% elif 200 < api.data.0.aqi <= 300 %}
+                    Category: Very Unhealthy<br/>
+                {% elif 300 < api.data.0.aqi <= 500 %}
+                    Category: Hazardous<br/>
+                {% endif %}
+                {% if api.data.0.aqi <= 50 %}
+                    Alert Level: 1<br/>
+                {% elif 50 < api.data.0.aqi <= 100 %}
+                    Alert Level: 2<br/>
+                {% elif 100 < api.data.0.aqi <= 150 %}
+                    Alert Level: 3<br/>
+                {% elif 150 < api.data.0.aqi <= 200 %}
+                    Alert Level: 4<br/>
+                {% elif 200 < api.data.0.aqi <= 300 %}
+                    Alert Level: 5<br/>
+                {% elif 300 < api.data.0.aqi <= 500 %}
+                    Alert Level: 6<br/>
+                {% endif %}
             </div>
             <div class="col-4" align="right">
-                Minimum Temperature: {{aqi.main.temp_min}}<br/>
-                Feels Like: {{aqi.main.feels_like}}<br/>
-                Maximum Temperature: {{aqi.main.temp_max}}<br/>
-                Humidity: {{aqi.main.humidity}}<br/>
+                Minimum Temperature: {{wth.main.temp_min}}<br/>
+                Feels Like: {{wth.main.feels_like}}<br/>
+                Maximum Temperature: {{wth.main.temp_max}}<br/>
+                Humidity: {{wth.main.humidity}}<br/>
             </div>
         </div>
         <hr class="my-4" align="center"> 
-        {% if api.0.Category.Name == "Good" %}
-            <p>(0-50) It’s a great day to be active outside.</p>
-        {% elif api.0.Category.Name == "Moderate" %}
-            <p>(51-100) Consider reducing prolonged or heavy outdoor exertion. Watch for symptoms such as coughing or shortness of breath.</p>
-        {% elif api.0.Category.Name == "Unhealthy for Sensitive Groups" %}
-            <p>(101-150) Reduce prolonged or heavy outdoor exertion. Take more breaks, do less intense activities. Watch for symptoms such as coughing or shortness of breath.</p>
-        {% elif api.0.Category.Name == "Unhealthy" %}
-            <p>(151-200) Avoid prolonged or heavy outdoor exertion. Schedule outdoor activities in the morning when ozone is lower. Consider moving activities indoors.</p>
-        {% elif api.0.Category.Name == "Very Unhealthy" %}
-            <p>(201-300) Avoid all physical activity outdoors. Move activities indoors or reschedule to a time when air quality is better..</p>
-        {% elif api.0.Category.Names == "Hazardous" %}
-            <p>(301-500) Avoid all physical activity outdoors.</p>
-        
-        {% endif %}
+            {% if api.data.0.aqi <= 50 %}
+                <p>(0-50) It’s a great day to be active outside.</p>
+            {% elif 50 < api.data.0.aqi <= 100 %}
+                <p>(51-100) Consider reducing prolonged or heavy outdoor exertion. Watch for symptoms such as coughing or shortness of breath.</p>
+            {% elif 100 < api.data.0.aqi <= 150 %}
+                <p>(101-150) Reduce prolonged or heavy outdoor exertion. Take more breaks, do less intense activities. Watch for symptoms such as coughing or shortness of breath.</p>
+            {% elif 150 < api.data.0.aqi <= 200 %}
+                <p>(151-200) Avoid prolonged or heavy outdoor exertion. Schedule outdoor activities in the morning when ozone is lower. Consider moving activities indoors.</p>
+            {% elif 200 < api.data.0.aqi <= 300 %}
+                <p>(201-300) Avoid all physical activity outdoors. Move activities indoors or reschedule to a time when air quality is better..</p>
+            {% elif 300 < api.data.0.aqi <= 500 %}
+                <p>(301-500) Avoid all physical activity outdoors.</p>
+            {% endif %}
         <hr class="my-4">
         
         <p class="lead">
-            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+            <a class="btn btn-primary btn-lg" href="https://air-quality.com/" role="button">Learn more</a>
         </p>
     </div>
 </p>
 <br/>
-<br/><br/>
-<!--br/><br/>
-{{aqi}}
-<br/--><br/>
+ 
 {%  endblock  %}
