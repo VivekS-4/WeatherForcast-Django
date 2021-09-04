@@ -38,7 +38,7 @@
     <img src="http://openweathermap.org/img/w/{{ wth.weather.0.icon }}.png" alt="Image" style="width:50px;height:50px;"> <br><br>
 
 
-    <div class="jumbotron Moderatex"> 
+    <div class="jumbotron Moderatex" align="center"> 
         <div class="row justify-content-center">
             <div class="col-4">
                 <align= "center">Weather: {{wth.weather.0.description.title}} <br></align>
@@ -70,7 +70,7 @@
                     Alert Level: 6<br/>
                 {% endif %}
             </div>
-            <div class="col-4" align="right">
+            <div class="col-4" >
                 Minimum Temperature: {{wth.main.temp_min}}<br/>
                 Feels Like: {{wth.main.feels_like}}<br/>
                 Maximum Temperature: {{wth.main.temp_max}}<br/>

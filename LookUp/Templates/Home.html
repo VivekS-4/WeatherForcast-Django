@@ -1,18 +1,18 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html>
-<body>
-
-<div id="heroCarousel" class="container carousel carousel-fade" data-ride="carousel">
-  <div class="carousel-item">
-      <div class="carousel-container">
-      <img src="{% static 'mysite/weather.jpg' %}" width="250" height="250" alt="Sorry No Image Found" />
-      <h2 class="animated fadeInDown">Welcome to <span>Weather Forcast Application</span></h2>
-        <a href="{% url 'index' %}" class="btn-get-started animated fadeInUp">Start</a>
+    <head>
+        <title>WeatherForecast</title>
+    </head>
+    <body bgcolor="black">
+    <div id="heroCarousel" class="container carousel carousel-fade" data-ride="carousel">
+    <div class="carousel-item">
+        <div class="carousel-container" align="center">
+        <h2 font style="color:white" text:'BrushScript' align="center">Welcome to <span>Weather Forcast Application</span></h2>
+        <img src="{% static 'mysite/L_Trim.gif' %}" width="700" length="700" alt="Sorry No Image Found" />
+        <br /><br />    <a href="{% url 'index' %}" class="btn-get-started animated fadeInUp" style="color:whitesmoke">Start</a>
+        </div>
     </div>
-  </div>
-</div>
-
-</body>
+    </div>
+    </body>
 </html>
