@@ -1,11 +1,12 @@
 from django.shortcuts import render
+import datetime
 import requests
 from .models import City
 from .forms import CityForm
 import json
 url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=9636be5ebf7c35a32203f1be39b63934'
-lat = str(28.37169)
-lg = str(77.056508)
+index_key = '8dd07bd89a83283a4c72e4ad17e1befc'
+zipcode = '000000'
 cc = "IN" #Country Code, Whenever going to user zipcode of another country change this here to that COUNTRY CODE
 
 def index(request):
@@ -20,8 +21,8 @@ def index(request):
         weather = {
             'city' : city,
             'temperature' : city_weather['main']['temp'],
-            'description' : city_weather['weather'][0]['description'],
-            'icon' : city_weather['weather'][0]['icon']
+            'icon' : city_weather['weather'][0]['icon'],
+            'description' : city_weather['weather'][0]['description']
         }
         weather_data.append(weather)
     return render(request, 'index.html', {'weather_data' : weather_data, 'form': form}) #returns the index.html template
@@ -30,19 +31,23 @@ def index(request):
 
 def Search(request):
     if request.method == "POST":
+        today = datetime.date.today()
         zipcode = request.POST.get("zipcode", False)
-        Weather_request = requests.get('http://api.openweathermap.org/data/2.5/weather?zip='+ zipcode +','+ cc +'&units=imperial&appid=b4baae3fd8dfcb64b615a38104ae65bc').json()
-        # requests.get('http://api.openweathermap.org/data/2.5/weather?q=New%20Delhi&units=imperial&appid=9636be5ebf7c35a32203f1be39b63934')
-        air_request = requests.get('https://api.weatherbit.io/v2.0/current/airquality?&postal_code='+ zipcode +'&key=7821ab051eb04daaa20e2c2fd19caec9') #valid till 02/10/21
+        Weather_request = requests.get('http://api.openweathermap.org/data/2.5/weather?zip='+ zipcode +','+ cc +'&units=imperial&appid=8dd07bd89a83283a4c72e4ad17e1befc').json()
+        url = "https://api.ambeedata.com/latest/by-postal-code"
+        querystring = {"postalCode":zipcode ,"countryCode":"IN"}
+        headers = {
+            'x-api-key': "7d1d11ece927ea42db9dd51c32ddd180a4bbb4d14feb94f99883bb8fcad32223",
+            'Content-type': "application/json"
+            }
+        response = requests.request("GET", url, headers=headers, params=querystring).json()
         try:
             wth = (Weather_request)
-            api = json.loads(air_request.content)
+            api = response
         except Exception as e :
-            wth = "Weather Error...",
+            wth = "Weather Error..."
             api = "Air Quality Error"
-        return render(request, 'Search.html', {'api': api, 'wth': wth, 'zipcode': zipcode}) 
-    
-
+        return render(request, 'Search.html', {'ap': api, 'wth': wth, 'zipcode': zipcode, 'td': today}) 
 
 def Home(request):
     return render(request, 'Home.html', {})

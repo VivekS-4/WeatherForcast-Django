@@ -1,3 +1,4 @@
+
 {% extends 'Base.html' %}
 {% load static %}
 
@@ -50,7 +51,7 @@
                                     <span class="title">{{ weather.city }}</span>
                                     <br>
                                     <span class="subtitle">{{ weather.temperature }}° F</span>
-                                    <br> {{ weather.description }}
+                                    <br> {{ weather.description.capitalize }}
                                 </p>
                             </div>
                         </div>
@@ -62,6 +63,5 @@
     </div>
 </section>
 <!-- <footer class="footer">
-
 </footer> -->
 {% endblock %}
